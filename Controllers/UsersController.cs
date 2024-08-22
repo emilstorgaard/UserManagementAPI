@@ -40,7 +40,17 @@ namespace UserManagementAPI.Controllers
                 return BadRequest("Email already exists.");
             }
 
-            var user = await _userService.AddUserAsync(addUserDto);
+            var addedUser = await _userService.AddUserAsync(addUserDto);
+
+            var user = new UserDto
+            {
+                Id = addedUser.Id,
+                Email = addedUser.Email,
+                Username = addedUser.Username,
+                CreatedAt = addedUser.CreatedAt,
+                UpdatedAt = addedUser.UpdatedAt
+            };
+
             return Ok(user);
         }
     }
